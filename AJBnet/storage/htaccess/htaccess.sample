@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+
+	#
+	# AJBnet
+	# Rewrite Rules
+	# v0.0
+	#
+	# Redirect all traffic to the controller, unless it is
+	# a real file or directory on the filesystem.
+	#
+
+	RewriteEngine On
+	RewriteBase {REWRITE_BASE}
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . index.php [L]
+
+</IfModule>

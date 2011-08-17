@@ -1,0 +1,14 @@
+<config version="1.0">
+	<name>{CMS_NAME}</name>
+	<version>0.0.0</version>
+	<environment>{ENVIRONMENT}</environment>
+	<install-dir>{INSTALL_DIRECTORY}</install-dir>
+	<timezone>America/New_York</timezone>
+	<default-format>{DEFAULT_FORMAT}</default-format>
+	<db-enabled type="bool">{DB_ENABLED}</db-enabled>
+	<db-server>{DB_SERVER}</db-server>
+	<db-name>{DB_NAME}</db-name>
+	<db-user>{DB_USER}</db-user>
+	<db-pass>{DB_PASS}</db-pass>
+	<send-httpstatus type="bool">{SEND_HTTPSTATUS}</send-httpstatus>
+</config>

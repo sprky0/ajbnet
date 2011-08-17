@@ -1,0 +1,21 @@
+<config version="1.0">
+
+	<name>AJBnet Development</name>
+	<version>0.0.0</version>
+
+	<environment>development</environment>
+	<timezone>America/New_York</timezone>
+	<install-dir>/API/</install-dir>
+	<default-format>json</default-format>
+
+	<db-enabled type="bool">true</db-enabled>
+	<db-server>db1298.perfora.net</db-server>
+	<db-name>db230455384</db-name>
+	<db-user>dbo230455384</db-user>
+	<db-pass>M3MhKmkp</db-pass>
+
+	<db-hash><![CDATA[Enter a short string here to use as a hash against non-reversible encrypted fields!]]></db-hash>
+
+	<send-httpstatus type="bool">true</send-httpstatus>
+
+</config>

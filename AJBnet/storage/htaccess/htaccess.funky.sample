@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+
+	#
+	# AJBnet
+	# Rewrite and Cache Rules
+	# v1.0
+	#
+	# I thought of this while having breakfast at Northeast Kingdom,
+	# in Brooklyn.  It turns out that some aspects of it already existed
+	# in a pattern called "Funky Caching" which Marcel Esser at Crosland
+	# Consulting was kind enough to enlighten me about.
+	#
+
+	# route all requests to the front controller unless the physical path exists. this should consider the alias above.
+
+	RewriteEngine On
+	RewriteBase {REWRITE_BASE}
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*) index.php?page=$1 [QSA]
+
+</IfModule>
