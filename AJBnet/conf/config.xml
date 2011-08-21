@@ -9,10 +9,11 @@
 	<default-format>json</default-format>
 
 	<db-enabled type="bool">true</db-enabled>
-	<db-server>db1298.perfora.net</db-server>
-	<db-name>db230455384</db-name>
-	<db-user>dbo230455384</db-user>
-	<db-pass>M3MhKmkp</db-pass>
+	<db-type>AJBnet_DB_MySQL</db-type>
+	<db-server></db-server>
+	<db-name></db-name>
+	<db-user></db-user>
+	<db-pass></db-pass>
 
 	<db-hash><![CDATA[Enter a short string here to use as a hash against non-reversible encrypted fields!]]></db-hash>
 
