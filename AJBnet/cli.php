@@ -3,7 +3,7 @@
 /**
  * AJBnet CMS
  * 
- * This script instantiates the Controller and runs the CMS.
+ * This script is intended for use interacting with AJBnet from the commandline
  * 
  * @author Avery Brooks <avery@ajbnet.com>
  * @package AJBnet
@@ -13,11 +13,10 @@ try {
 
 	include('core/AJBnet_Loader.script.php');
 
-	// $AJBnet = AJBnet::Construct("AJBnet");
 	$AJBnet = new AJBnet();
 
-	// Start in API mode
-	$AJBnet->SetMode(AJBnet::API_MODE); // this is the default anyway
+	// Start in CLI mode
+	$AJBnet->SetMode(AJBnet::CLI_MODE); // this is the default anyway
 	$AJBnet->Run();
 
 } catch (exception $e) {

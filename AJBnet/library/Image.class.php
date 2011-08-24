@@ -2,7 +2,6 @@
 
 /**
  * Image ... stores image metadata, uses File to access storage and general file metadata
- * Watermark ?  should we support that sort of crap ?
  * 
  * Notes on Constants:
  * 
@@ -10,9 +9,10 @@
  * 100-104 : Scale Modes
  * 200-209 : Alignment Options
  * 
- * @todo Polite mode needs crop
+ * @todo Polite mode needs work
  * @todo the rest of the modes need to be completed
  * @todo DB has to be completed so we can reference modded iamges
+ * @todo watermarking
  * @todo storage has to be finished so we can cache and log versions
  * 
  * @package AJBnet
@@ -59,6 +59,7 @@ class Image extends AJBnet_RPC { // extends AJBnet_DAO {
 		Image::COMPLEX => "Complex",
 		
 		Image::JPG => "jpeg"
+
 	);
 	
 	protected $File;

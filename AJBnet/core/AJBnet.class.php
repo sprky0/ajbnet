@@ -40,18 +40,30 @@
  * @package AJBnet
  * @subpackage Core
  * @author Avery Brooks <avery@ajbnet.com>
- * @copyright 2009
+ * @copyright 2009-2011
  */
 class AJBnet {
 
 	// Access Modes
 	const API_MODE = 001;
 	const NATIVE_MODE = 002;
+	const CLI_MODE = 003;
 
 	// Command Modes
 	const PATH_AS_DIRECTORIES = 101; // "DIRECTORIES";
 	const PATH_AS_FIRSTKEY = 102; // "FIRSTKEY";
 	const PATH_AS_FIRSTPARAM = 103; // "FIRSTPARAM";
+	
+	const JSON = "JSON";
+	const XML = "XML";
+	
+	/*
+	We need something readable like this to simplify file access specifications
+	
+	const READ = 201;
+	const WRITE = 202;
+	const APPEND = 203;
+	*/
 	
 	/**
 	 * User DAO
@@ -66,7 +78,7 @@ class AJBnet {
 	private $TargetClass;
 	private $TargetFunction;
 	private $TargetID = "";
-	private $TargetFormat = "";
+	private $TargetFormat = AJBnet::JSON;
 	private $Path = "";
 
 	// Loaded classes
@@ -109,25 +121,29 @@ class AJBnet {
 	public function __construct() {
 
 		$this->Timer_SetMark("Construct");
-
+		
 		@session_start();
 		ob_start();
 
 		// Internal deps.
 
-		$this->LoadConfig('conf/config.xml'); // config
+		// @todo abstract this constant out elsewhere ?  (it's defined in the Loader script, but maybe it could be set locally, in the constructor)
+		$this->LoadConfig( AJBNET_INSTALL_DIRECTORY . 'conf/config.xml'); // config
 
-		// maybe do this bullshit from the config
+		// Set the timezone
 		date_default_timezone_set($this->GetConfig("timezone"));
 
+		// @todo remove this!  handled by autoloader
+		/*
 		$this->LoadLibrary();
 		$this->LoadModules();
+		*/
 
 		if ($this->GetConfig("db-enabled") === true)
 			$this->User = $this->Construct("User");
 
 	}
-	
+
 	public function __destruct() {
 		ob_flush();
 	}
@@ -226,6 +242,10 @@ class AJBnet {
 				$this->_Mode = AJBnet::NATIVE_MODE;
 				break;
 
+			case AJBnet::CLI_MODE:
+				$this->_Mode = AJBnet::CLI_MODE;
+				break;
+
 			default:
 				throw new AJBnetException("Unknown Access Mode!");
 				break;
@@ -300,6 +320,8 @@ class AJBnet {
 	 * @param array $exclude Files to exclude from load.
 	 */
 	public function LoadLibrary($exclude=array()) {
+		return false;
+
 		$this->LoadClassDirectory($this->Config['lib-dir']);
 	}
 
@@ -307,8 +329,12 @@ class AJBnet {
 	 * Automatically load all PHP files in a directory.
 	 * 
 	 * @param string $cdir
+	 * @deprecated
+	 * @todo Remove this!  Is handled by the autoloader
 	 */
 	private function LoadClassDirectory($cdir) {
+		return false;
+	
 		$dir = opendir(getcwd() . "/" . $cdir);
 		$include = array();
 	    while (false !== ($file = readdir($dir))) {
@@ -543,7 +569,7 @@ class AJBnet {
 	private function _Output($data,$status=200,$messages=array()) {
 
 		// Maybe put exceptions in an array in AJBnet ?
-		if ($this->_Mode !== AJBnet::API_MODE)
+		if ($this->_Mode !== AJBnet::NATIVE_MODE)
 			return $data;
 
 		$Vom = new DataOutput($this->GetConfig("send-httpstatus"));
@@ -608,8 +634,5 @@ class AJBnet {
 			$this->Timer_SetMark("Get Duration");
 		return $this->Timer_Markers[count($this->Timer_Markers) - 1][0] - $this->Timer_Markers[0][0];
 	}
-
-
-
 
 } // end AJBnet

@@ -8,7 +8,7 @@
 	<install-dir>/API/</install-dir>
 	<default-format>json</default-format>
 
-	<db-enabled type="bool">true</db-enabled>
+	<db-enabled type="bool">false</db-enabled>
 	<db-type>AJBnet_DB_MySQL</db-type>
 	<db-server></db-server>
 	<db-name></db-name>

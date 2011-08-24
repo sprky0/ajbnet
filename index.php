@@ -8,7 +8,6 @@
  * @author Avery Brooks <avery@ajbnet.com>
  * @package AJBnet
  */
-chdir('AJBnet');
-include('api.php');
+include('AJBnet/api.php');
 
 ?>

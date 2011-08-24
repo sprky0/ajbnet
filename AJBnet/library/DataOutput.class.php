@@ -60,7 +60,7 @@ class DataOutput {
 
 			case "json":
 			// header("Content-type: " . MimeTypes::JSON . "; charset={$this->Charset}");
-			header("Content-Encoding: {$this->Encoding}");
+			// header("Content-Encoding: {$this->Encoding}");
 			$output = $this->_ToJson();
 			break;
 
