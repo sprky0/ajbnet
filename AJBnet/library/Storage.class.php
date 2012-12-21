@@ -9,7 +9,7 @@
  * @copyright 2009
  */
 class Storage {
-	
+
 	/*
 
 		storage will have functions to:
@@ -17,7 +17,7 @@ class Storage {
 			copy / move / delete files
 			get file info
 			read files
-	
+
 	*/
 
 	protected $_Handle;
@@ -63,6 +63,5 @@ class Storage {
 		if (!empty($this->_Handle))
 			fclose($this->_Handle);
 	}
-	
-	
+
 }

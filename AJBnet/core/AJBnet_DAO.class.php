@@ -13,7 +13,7 @@
  * @author Avery Brooks
  * @copyright 2009
  */
-class AJBnet_DAO extends AJBnet_RPC {
+class AJBnet_DAO {
 
 	/**
 	 * @var MySQLi actual MySQLi object for MySQL interaction.
@@ -169,7 +169,8 @@ class AJBnet_DAO extends AJBnet_RPC {
 	/**
 	 * Not complete yet!
 	 * 
-	 * @todo FINISH THIS!  WE NEED IT!
+	 * @todo make WHERE an assoc array
+	 * 
 	 * @param array $Values
 	 * @param string $Where
 	 * @param string $Table
@@ -314,5 +315,3 @@ class AJBnet_DAO extends AJBnet_RPC {
 	}
 
 }
-
-?>

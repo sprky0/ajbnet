@@ -154,7 +154,7 @@ class AJBnet_RPC {
 	 */
 	protected function SetSession($key,$val) {
 		if (!isset($_SESSION['AJBnet']))
-		 	$_SESSION['AJBnet'] = array();
+			$_SESSION['AJBnet'] = array();
 		$_SESSION['AJBnet'][$key] = $val;
 	}
 

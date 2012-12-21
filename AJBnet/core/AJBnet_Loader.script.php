@@ -24,8 +24,6 @@ $_Libs = array(
 	array('AJBnet_DAO','class')
 );
 
-$_Lib = "";
-
 for($a=0;$a<count($_Libs);$a++) {
 	$_curName = $_Libs[$a][0];
 	$_curType = $_Libs[$a][1];
@@ -53,6 +51,4 @@ function __autoload($class_name) {
 		return;
 	}
 
-
-	
 }

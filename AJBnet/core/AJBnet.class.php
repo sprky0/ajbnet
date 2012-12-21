@@ -206,13 +206,21 @@ class AJBnet {
 			return $this->_Output($Res,200,$Mes);
 
  		} catch (ApplicationException $e) {
+
 			return $this->_OutputException($e);
-		} catch (DatabaseException $e) {
-			return $this->_OutputException($e);
-		} catch (SecurityException $e) {
-			return $this->_OutputException($e);
+
+ 		} catch (DatabaseException $e) {
+
+ 			return $this->_OutputException($e);
+
+ 		} catch (SecurityException $e) {
+
+ 			return $this->_OutputException($e);
+
  		} catch (AJBnetException $e) {
-			return $this->_OutputException($e);
+
+ 			return $this->_OutputException($e);
+
  		}
 
 	}
