@@ -47,7 +47,7 @@ class User extends AJBnet_DAO {
 
 	/**
 	 * DANGER WILL ROBINSON!
-	 * THIS IS JUST FOR BULLSHIT TESTING AND MUST BE HACKED OUT BEFORE WE GO TO PRODUCTION!
+	 * THIS IS JUST FOR TESTING AND MUST BE HACKED OUT BEFORE PRODUCTION USE!
 	 * 
 	 * @internal
 	 * @return Array
@@ -58,31 +58,11 @@ class User extends AJBnet_DAO {
 		$this->Install();
 		$this->Insert(
 			array(
-				"FirstName" => "Avery",
-				"LastName" => "Brooks",
-				"UserName" => "avery",
-				"EmailAddress" => "avery@averyisgreat.com",
-				"Password" => $this->Encode("brooks"),
-				"Access" => 1
-			)
-		);
-		$this->Insert(
-			array(
-				"FirstName" => "Adian",
-				"LastName" => "Coyne",
-				"UserName" => "aidan",
-				"EmailAddress" => "raptros.v76@gmail.com",
-				"Password" => $this->Encode("coyne"),
-				"Access" => 1
-			)
-		);
-		$this->Insert(
-			array(
-				"FirstName" => "Praveen",
-				"LastName" => "Sharma",
-				"UserName" => "praveen",
-				"EmailAddress" => "sharma@radicalmedia.com",
-				"Password" => $this->Encode("sharma"),
+				"FirstName" => "John",
+				"LastName" => "Doe",
+				"UserName" => "john.doe",
+				"EmailAddress" => "john@doe.com",
+				"Password" => $this->Encode("password"),
 				"Access" => 1
 			)
 		);
