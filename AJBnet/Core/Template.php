@@ -66,16 +66,18 @@ class Template {
 		return $this->load($templateFile);
 	}
 
-	protected function load($templateFile) {
+	protected function load($templateFile, $withData = true) {
 		ob_start();
-		$data = $this->getAllData();
-		extract($data);
+		if (true === $withData) {
+			$data = $this->getAllData();
+			extract($data);
+		}
 		require($templateFile);
 		$content = ob_get_clean();
 		return $content;
 	}
 
-	protected function setData($k,$v,$set='global') {
+	public function setData($k,$v,$set='global') {
 		if (!is_array($this->templateData[$set])) {
 			$this->templateData[$set] = [];
 		}
