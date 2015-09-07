@@ -1,0 +1,11 @@
+{
+    "name": "ajbnet/ajbnet",
+    "description": "Framework / library",
+    "authors": [
+        {
+            "name": "Avery Brooks",
+            "email": "avery@ajbnet.com"
+        }
+    ],
+    "require": {}
+}
