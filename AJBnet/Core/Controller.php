@@ -45,6 +45,7 @@ class Controller {
 			$path = substr($path,1);
 		}
 
+		// locate a matching route on the stack
 		$route = $this->resolveRoute($path);
 
 		if (false === $route) {
@@ -57,11 +58,7 @@ class Controller {
 		$matches = [];
 		preg_match_all($route['route'], $path, $matches);
 
-		if (is_array($matches[0])) {
-			$matches = array_shift($matches);
-		}
-
-		return $route['action']($matches);
+		return (is_array($matches[1])) ? $route['action']($matches[1]) : $route['action']();
 
 	}
 
