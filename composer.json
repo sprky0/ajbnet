@@ -7,5 +7,10 @@
             "email": "avery@ajbnet.com"
         }
     ],
+    "autoload": {
+        "psr-0" : {
+            "AJBnet\\" : "AJBnet/"
+        }
+    },
     "require": {}
 }
