@@ -8,9 +8,7 @@
         }
     ],
     "autoload": {
-        "psr-0" : {
-            "AJBnet\\" : "AJBnet/"
-        }
+  		"files": ["./bootstrap.php"]
     },
     "require": {}
 }
