@@ -24,7 +24,7 @@ class Template {
 		$this->templateDirectory = realpath($directory);
 	}
 
-	public function autoloadTemplates($path = null) {
+	public function autoloadTemplate($path = null) {
 
 		if (is_null($path)) {
 			$path = $_SERVER['REQUEST_URI'];
@@ -32,6 +32,10 @@ class Template {
 
 		if (substr($path,-1) == '/') {
 			$path .= 'index';
+		}
+
+		if (!$this->templateExists($path)) {
+			return false;
 		}
 
 		return $this->loadTemplateWithLayout($path);
@@ -64,6 +68,11 @@ class Template {
 			throw new Exceptions\FilesystemException("Cannot locate template '{$template}'");
 		}
 		return $this->load($templateFile);
+	}
+
+	protected function templateExists($template) {
+		$templateFile = "{$this->templateDirectory}/{$template}.php";
+		return is_file($templateFile);
 	}
 
 	protected function load($templateFile, $withData = true) {
