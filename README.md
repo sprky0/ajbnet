@@ -1,5 +1,5 @@
-# AJBnet CMS
+# AJBnet
 
 ## Usage
 
-* refactoring everything
+* include `bootstrap.php` in your project's autoload
