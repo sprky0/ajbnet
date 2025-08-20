@@ -10,21 +10,21 @@ class Template {
 
 	// use Traits\MutableObject;
 
-	protected $templateData = ['global'=>[]];
-	protected $templateDirectory = '';
-	protected $layoutDirectory = 'layouts';
-	protected $partialsDirectory = 'partials';
-	protected $layout = 'index';
+	protected array $templateData = ['global'=>[]];
+	protected string $templateDirectory = '';
+	protected string $layoutDirectory = 'layouts';
+	protected string $partialsDirectory = 'partials';
+	protected string $layout = 'index';
 
-	public function __contruct() {
-		$this->set('generated',time());
+	public function __construct() {
+		$this->setData('generated', time());
 	}
 
-	public function registerTemplateDirectory($directory) {
+	public function registerTemplateDirectory(string $directory): void {
 		$this->templateDirectory = realpath($directory);
 	}
 
-	public function autoloadTemplate($path = null) {
+	public function autoloadTemplate(?string $path = null): string|bool {
 
 		if (is_null($path)) {
 			$path = $_SERVER['REQUEST_URI'];
@@ -45,13 +45,13 @@ class Template {
 	/**
 	 *
 	 */
-	public function loadTemplateWithLayout($path) {
+	public function loadTemplateWithLayout(string $path): string {
 		$templateData = $this->loadTemplate($path);
 		$this->setData('page_data', $templateData);
 		return $this->loadLayout();
 	}
 
-	protected function loadLayout() {
+	protected function loadLayout(): string {
 
 		$templateFile = "{$this->templateDirectory}/{$this->layoutDirectory}/{$this->layout}.php";
 
@@ -62,7 +62,7 @@ class Template {
 		return $this->load($templateFile);
 	}
 
-	protected function loadTemplate($template, $dataset = null) {
+	protected function loadTemplate(string $template, mixed $dataset = null): string {
 		$templateFile = "{$this->templateDirectory}/{$template}.php";
 		if (!is_file($templateFile)) {
 			throw new Exceptions\FilesystemException("Cannot locate template '{$template}'");
@@ -70,12 +70,12 @@ class Template {
 		return $this->load($templateFile);
 	}
 
-	protected function templateExists($template) {
+	protected function templateExists(string $template): bool {
 		$templateFile = "{$this->templateDirectory}/{$template}.php";
 		return is_file($templateFile);
 	}
 
-	protected function load($templateFile, $withData = true) {
+	protected function load(string $templateFile, bool $withData = true): string {
 		ob_start();
 		if (true === $withData) {
 			$data = $this->getAllData();
@@ -86,18 +86,18 @@ class Template {
 		return $content;
 	}
 
-	public function setData($k,$v,$set='global') {
-		if (!is_array($this->templateData[$set])) {
+	public function setData(string $k, mixed $v, string $set = 'global'): void {
+		if (!isset($this->templateData[$set]) || !is_array($this->templateData[$set])) {
 			$this->templateData[$set] = [];
 		}
 		$this->templateData[$set][$k] = $v;
 	}
 
-	protected function getData($k,$set='global') {
+	protected function getData(string $k, string $set = 'global'): mixed {
 		return isset($this->templateData[$set][$k]) ? $this->templateData[$set][$k] : null;
 	}
 
-	protected function getAllData($set=null) {
+	protected function getAllData(?string $set = null): array {
 		if (!is_null($set)) {
 			return array_merge($this->templateData[$set], $this->templateData['global']);
 		} else {

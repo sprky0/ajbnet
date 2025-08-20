@@ -12,12 +12,12 @@ class Controller {
 	// static $ANY_ALPHA_DIRS = '		// [A-Za-z0-9\/]*'
 	// static $TWO_DIRECTORIES = ''
 
-	protected $routes = [];
+	protected array $routes = [];
 
-	public function __contruct() {
+	public function __construct() {
 	}
 
-	public function register($route,$action) {
+	public function register(string $route, callable $action): void {
 
 		if ($this->routeExists($route)) {
 			throw new Exceptions\ApplicationException("Route '{$route}' is already registered.");
@@ -29,7 +29,7 @@ class Controller {
 		];
 	}
 
-	public function resolve($path = null) {
+	public function resolve(?string $path = null): mixed {
 
 		if (is_null($path)) {
 			$path = $_SERVER['REQUEST_URI'];
@@ -56,25 +56,27 @@ class Controller {
 		}
 
 		$matches = [];
-		preg_match_all($route['route'], $path, $matches);
+		if (preg_match('/^\/.*\/$/', $route['route'])) {
+			preg_match_all($route['route'], $path, $matches);
+		}
 
-		return (is_array($matches[1])) ? $route['action']($matches[1]) : $route['action']();
+		return (isset($matches[1]) && is_array($matches[1])) ? $route['action']($matches[1]) : $route['action']();
 
 	}
 
 	/**
-	 * @param string
-	 * @return mixed
+	 * @param string $test
+	 * @return array|false
 	 */
-	protected function resolveRoute($test) {
+	protected function resolveRoute(string $test): array|false {
 
 		for($i = 0; $i < count($this->routes); $i++) {
 			// string match
 			if ($this->routes[$i]['route'] === $test) {
 				return $this->routes[$i];
 			}
-			// regex
-			else if (preg_match_all($this->routes[$i]['route'], $test)) {
+			// regex match (only if route looks like a regex with delimiters)
+			else if (preg_match('/^\/.*\/$/', $this->routes[$i]['route']) && preg_match_all($this->routes[$i]['route'], $test)) {
 				return $this->routes[$i];
 			}
 		}
@@ -86,7 +88,7 @@ class Controller {
 	/**
 	 * @return boolean
 	 */
-	protected function routeExists($test) {
+	protected function routeExists(string $test): bool {
 		return $this->resolveRoute($test) !== false;
 	}
 
