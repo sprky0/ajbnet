@@ -9,13 +9,13 @@ namespace AJBnet\Core\Traits;
 
 trait MutableObject {
 
-	protected $__data = [];
+	protected array $__data = [];
 
-	public function __set($k,$v) {
+	public function __set(string $k, mixed $v): void {
 		$this->__data[$k] = $v;
 	}
 
-	public function __get($k) {
+	public function __get(string $k): mixed {
 		return isset($this->__data[$k]) ? $this->__data[$k] : null;
 	}
 
