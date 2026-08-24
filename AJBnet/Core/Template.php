@@ -21,7 +21,14 @@ class Template {
 	}
 
 	public function registerTemplateDirectory(string $directory): void {
-		$this->templateDirectory = realpath($directory);
+
+		$resolved = realpath($directory);
+
+		if (false === $resolved) {
+			throw new Exceptions\FilesystemException("Template directory '{$directory}' does not exist");
+		}
+
+		$this->templateDirectory = $resolved;
 	}
 
 	public function autoloadTemplate(?string $path = null): string|bool {
@@ -62,12 +69,33 @@ class Template {
 		return $this->load($templateFile);
 	}
 
-	protected function loadTemplate(string $template, mixed $dataset = null): string {
+	protected function loadTemplate(string $template, ?array $dataset = null): string {
+
 		$templateFile = "{$this->templateDirectory}/{$template}.php";
+
 		if (!is_file($templateFile)) {
 			throw new Exceptions\FilesystemException("Cannot locate template '{$template}'");
 		}
-		return $this->load($templateFile);
+
+		return $this->load($templateFile, true, $dataset ?? []);
+	}
+
+	/**
+	 * Renders a partial from $partialsDirectory with its own local variables.
+	 */
+	public function loadPartial(string $partial, array $dataset = []): string {
+
+		$templateFile = "{$this->templateDirectory}/{$this->partialsDirectory}/{$partial}.php";
+
+		if (!is_file($templateFile)) {
+			throw new Exceptions\FilesystemException("Cannot locate partial '{$partial}'");
+		}
+
+		return $this->load($templateFile, true, $dataset);
+	}
+
+	public function partialExists(string $partial): bool {
+		return is_file("{$this->templateDirectory}/{$this->partialsDirectory}/{$partial}.php");
 	}
 
 	protected function templateExists(string $template): bool {
@@ -75,15 +103,29 @@ class Template {
 		return is_file($templateFile);
 	}
 
-	protected function load(string $templateFile, bool $withData = true): string {
-		ob_start();
+	protected function load(string $templateFile, bool $withData = true, array $dataset = []): string {
+
+		$bufferLevel = ob_get_level();
+
 		if (true === $withData) {
-			$data = $this->getAllData();
-			extract($data);
+			extract($this->getAllData());
 		}
-		require($templateFile);
-		$content = ob_get_clean();
-		return $content;
+
+		if ([] !== $dataset) {
+			extract($dataset);
+		}
+
+		ob_start();
+
+		try {
+			require($templateFile);
+			return (string)ob_get_clean();
+		} catch (\Throwable $error) {
+			while (ob_get_level() > $bufferLevel) {
+				ob_end_clean();
+			}
+			throw $error;
+		}
 	}
 
 	public function setData(string $k, mixed $v, string $set = 'global'): void {
